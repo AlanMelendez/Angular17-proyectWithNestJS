@@ -44,13 +44,8 @@ export class AuthService {
           this._currentUser.set(response.user);
           this._authStatus.set(AuthStatus.autenticated);
         }),
-
-
         map(() => true),
-
-
         catchError(error => {
-
           return throwError(()=> "Error al iniciar sesión, este es el error "+ error.message);
         })
       );
