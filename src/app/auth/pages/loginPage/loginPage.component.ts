@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login-page',
@@ -83,6 +84,12 @@ export class LoginPageComponent {
           },
           error: (error) => {
             console.error('Error:', error);
+            //Mostramos una alerta de error son sweetalert2.
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: error,
+            });
           },
        }
     );
