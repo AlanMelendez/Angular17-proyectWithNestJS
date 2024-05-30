@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-dashboard-layout',
@@ -7,8 +8,23 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   imports: [
     CommonModule,
   ],
-  template: `<p>dashboardLayout works!</p>`,
+  template: `
+
+      <h3>USUARIO: </h3>
+      <hr>
+
+      <pre>{{user() | json}}</pre>
+
+  `,
   styleUrl: './dashboardLayout.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardLayoutComponent { }
+export class DashboardLayoutComponent {
+
+  private authService = inject(AuthService);
+  public user =  computed(()=> this.authService.currentUser());
+  getUser(){
+    return this.user();
+  }
+
+}

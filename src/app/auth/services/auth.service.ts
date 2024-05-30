@@ -41,6 +41,7 @@ export class AuthService {
 
         tap(response => {
           localStorage.setItem('token', response.token);
+          localStorage.setItem('user', JSON.stringify(response.user));
           this._currentUser.set(response.user);
           this._authStatus.set(AuthStatus.autenticated);
         }),

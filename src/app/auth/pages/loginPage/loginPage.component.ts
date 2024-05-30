@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -68,6 +69,7 @@ import Swal from 'sweetalert2';
 export class LoginPageComponent {
   private fb = inject(FormBuilder);
   private service = inject(AuthService);
+  private router = inject(Router);
 
   public myform: FormGroup = this.fb.group({
     email: ['test@test.com', [Validators.required, Validators.email]],
@@ -77,21 +79,30 @@ export class LoginPageComponent {
   login() {
     //Extract the email and password from the form and call the login method from the service
     const { email, password } = this.myform.value;
-      this.service.login(email, password).subscribe(
-        {
-          next: () => {
-            console.log('Login success');
-          },
-          error: (error) => {
-            console.error('Error:', error);
-            //Mostramos una alerta de error son sweetalert2.
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: error,
-            });
-          },
-       }
-    );
+    this.service.login(email, password).subscribe({
+      next: () => {
+        console.log('Login success');
+        //Mostramos una alerta de éxito son sweetalert2.
+        Swal.fire({
+          icon: 'success',
+          title: 'Login success',
+          text: 'Welcome',
+          timer: 2000,
+        });
+        setTimeout(() => {
+          //Redirigimos al usuario al dashboard.
+          this.router.navigate(['/dashboard']);
+        }, 2100);
+      },
+      error: (error) => {
+        console.error('Error:', error);
+        //Mostramos una alerta de error son sweetalert2.
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error,
+        });
+      },
+    });
   }
 }
