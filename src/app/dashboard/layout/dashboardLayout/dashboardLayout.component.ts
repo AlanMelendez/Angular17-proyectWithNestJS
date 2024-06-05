@@ -19,6 +19,11 @@ import { Route, Router } from '@angular/router';
 
       <a (click)="login()">LOGIN click me</a>
 
+
+      <button (click)="logout()">
+        LOGOUT
+      </button>
+
   `,
   styleUrl: './dashboardLayout.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,6 +39,9 @@ export class DashboardLayoutComponent {
 
   login(){
     this.route.navigateByUrl('/auth/login');
+  }
+  logout(){
+    this.authService.logOut();
   }
 
 }
