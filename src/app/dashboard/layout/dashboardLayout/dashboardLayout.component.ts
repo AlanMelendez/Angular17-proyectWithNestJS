@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-layout',
@@ -14,6 +15,9 @@ import { AuthService } from '../../../auth/services/auth.service';
       <hr>
 
       <pre>{{user() | json}}</pre>
+      <br>
+
+      <a (click)="login()">LOGIN click me</a>
 
   `,
   styleUrl: './dashboardLayout.component.css',
@@ -22,9 +26,14 @@ import { AuthService } from '../../../auth/services/auth.service';
 export class DashboardLayoutComponent {
 
   private authService = inject(AuthService);
+  private route = inject(Router);
   public user =  computed(()=> this.authService.currentUser());
   getUser(){
     return this.user();
+  }
+
+  login(){
+    this.route.navigateByUrl('/auth/login');
   }
 
 }
